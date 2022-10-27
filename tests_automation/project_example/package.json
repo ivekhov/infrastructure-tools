@@ -11,5 +11,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.6"
+  },
+  "devDependencies": {
+    "intelli-espower-loader": "^1.1.0",
+    "mocha": "^10.1.0",
+    "power-assert": "^1.6.1"
+  }
 }
