@@ -47,3 +47,36 @@ assert(user.name === 'Michel');
 
 // closing statement
 console.log('Все тесты пройдены!');
+
+
+// 04 power-assert
+
+// 'right'
+// right1: (items, value, fromIndex = 0) => items.indexOf(value, fromIndex)
+assert(indexOf(tests[0], 2) === _.indexOf(tests[0], 2)); // equality is true
+
+// 'wrong1'
+// wrong1: (items, value, fromIndex = 1) => items.indexOf(value, fromIndex),
+
+// цель wrong1 - проверить, что при замене аргументе индекса на другое
+// значение (а именно, если в функцию подставить поиск с 1 индекса, то 
+// функция продолжит работать корректно
+assert(indexOf([1, 2, 1, 2], 1) === 0);
+
+
+// "wrong2"
+// wrong2: (items, value, fromIndex) => {
+//   const index = items.indexOf(value, fromIndex);
+//   return index === -1 ? 0 : index;
+// },
+// цель - проверить случай, когда элемента нет в массиве
+assert(indexOf([1, 2, 1, 2, 4, 10, 41, 666, 999], 322) === -1);
+
+// 'wrong3' - проверяет кейс, если стартовать не с первого вхождения элемента
+// wrong3: (items, value) => items.indexOf(value)
+assert(indexOf([999, 1, 2, 1, 2, 4, 10, 41, 666, 999], 2, 3)  === 4);
+
+// 'wrong4' - проверяет кейс нахождения элемента по последнему индексу
+// wrong4: (items, value) => _.lastIndexOf(items, value),
+assert(indexOf([1, 8, 9, 3, 9, 43], 43) === 5);
+

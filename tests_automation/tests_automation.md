@@ -141,26 +141,98 @@ npm install --save-dev mocha power-assert intelli-espower-loader
 
 ```js
 import assert from 'power-assert';
+```
 
+## Supressor
+
+Как работают тесты Хекслета и Supressor
+
+https://help.hexlet.io/ru/articles/111145-kak-my-testiruem-testy-utilita-suppressor
+
+Пример функции теста
+
+```js
+import _ from 'lodash';
+
+const functions = {
+  right1: (items, value, fromIndex = 0) => items.indexOf(value, fromIndex),
+
+
+  wrong1: (items, value, fromIndex = 1) => items.indexOf(value, fromIndex),
+
+
+  wrong2: (items, value, fromIndex) => {
+    const index = items.indexOf(value, fromIndex);
+    return index === -1 ? 0 : index;
+  },
+  wrong3: (items, value) => items.indexOf(value),
+  wrong4: (items, value) => _.lastIndexOf(items, value),
+};
+
+export default () => {
+  const name = process.env.FUNCTION_VERSION || 'right1';
+  return functions[name];
+};
+```
+
+Примеры решений задач
+
+```js
+
+// 04 power-assert
+
+// 'right'
+// right1: (items, value, fromIndex = 0) => items.indexOf(value, fromIndex)
+assert(indexOf(tests[0], 2) === _.indexOf(tests[0], 2)); // equality is true
+
+// 'wrong1'
+// wrong1: (items, value, fromIndex = 1) => items.indexOf(value, fromIndex),
+
+// цель wrong1 - проверить, что при замене аргументе индекса на другое
+// значение (а именно, если в функцию подставить поиск с 1 индекса, то 
+// функция продолжит работать корректно
+assert(indexOf([1, 2, 1, 2], 1) === 0);
+
+
+// "wrong2"
+// wrong2: (items, value, fromIndex) => {
+//   const index = items.indexOf(value, fromIndex);
+//   return index === -1 ? 0 : index;
+// },
+// цель - проверить случай, когда элемента нет в массиве
+assert(indexOf([1, 2, 1, 2, 4, 10, 41, 666, 999], 322) === -1);
+
+// 'wrong3' - проверяет кейс, если стартовать не с первого вхождения элемента
+// wrong3: (items, value) => items.indexOf(value)
+assert(indexOf([999, 1, 2, 1, 2, 4, 10, 41, 666, 999], 2, 3)  === 4);
+
+// 'wrong4' - проверяет кейс нахождения элемента по последнему индексу
+// wrong4: (items, value) => _.lastIndexOf(items, value),
+assert(indexOf([1, 8, 9, 3, 9, 43], 43) === 5);
 ```
 
 ## Jest библиотека
 https://ru.hexlet.io/courses/js-testing/lessons/jest/theory_unit 
 
+```bash
+# установка пакета
+npm init
 
-```
-// запуск теста с помощью jest
-// Jest поддерживает ECMAScript модули в экспериментальном режиме
-// Чтобы активировать поддержку модулей в тестах,
-// нужно запускать тесты с переменной окружения NODE_OPTIONS
+# В директории с проектом
+npm i --save-dev jest
 
+# "type": "module" -- add in package.json
+
+# Создание файла в каталоге проекта 
+./__tests__/index.test.js
+
+
+# запуск теста с помощью jest
+# Jest поддерживает ECMAScript модули в экспериментальном режиме
+# Чтобы активировать поддержку модулей в тестах,
+# нужно запускать тесты с переменной окружения NODE_OPTIONS
 
 NODE_OPTIONS=--experimental-vm-modules npx jest
-```
-
-Создание файла в каталоге проекта 
-```
-./__tests__/index.test.js
 ```
 
 Для тестов Jest предоставляет две глобальные функции: test и expect. Они доступны без какого-либо импорта, так как Jest делает их глобальными функциями.
@@ -175,6 +247,11 @@ Jest использует "матчеры" (matchers). Это утвержден
 На результате, возвращаемом функцией expect(), вызывается подходящий матчер, например, toEqual.
 
 ```js
+test('reverse', () => {
+  expect(reverse('hello')).toEqual('olleh');
+  expect(reverse('')).toEqual('');
+});
+
 // Ожидается, что результат выражения reverse('hello') равен 'olleh'
 expect(reverse('hello')).toEqual('olleh');
 ```
