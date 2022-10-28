@@ -255,3 +255,33 @@ test('reverse', () => {
 // Ожидается, что результат выражения reverse('hello') равен 'olleh'
 expect(reverse('hello')).toEqual('olleh');
 ```
+Примеры решения задач
+
+```js
+// функции проверки
+  wrong1: (coll = [], ...values) => {
+    const [result] = coll.reduce(([prevColl, vals], item) => {
+      const newVals = vals.filter((val) => val !== item);
+      const nextColl = newVals.length === vals.length ? [...prevColl, item] : prevColl;
+      return [nextColl, newVals];
+    }, [[], values]);
+
+    return result;
+  },
+
+  wrong2: (coll = [], ...values) => {
+    const result = coll.filter((val) => !values.includes(val));
+    return result.length === 0 ? null : result;
+  },
+
+
+// решение
+test('without', () => {
+  expect(without([2, 1, 2, 3], 1, 2)).toEqual([3]);
+  expect(without([2, 1, 2, 3, 4, 5], 1, 2)).toEqual([3, 4, 5]);
+  expect(without([2, 1, 2, 3], 1, 2, 3)).toEqual([]);
+  expect(without([2, 1, 2, 3], 41)).toEqual([2, 1, 2, 3]);
+  expect(without([], 1, 2, 3)).toEqual([]);
+});
+```
+
