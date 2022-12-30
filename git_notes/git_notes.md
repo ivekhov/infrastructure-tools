@@ -195,11 +195,15 @@ git checkout HASH-CODE
 git checkout main
 ```
 
-Определение места положения
+Определение местоположения
 
 ```
 git  branch
 ```
+
+Удалить файл из индекса, но не из директории (!!!)
+git rm --cache FILE_NAME
+
 
 Ссылки:
 
