@@ -92,7 +92,7 @@ set ttyfast
 
 syntax enable
 set background=light
-colorscheme monokai 
+colorscheme solarized 
 
 " set guifont=Consolas:h13
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
@@ -130,7 +130,7 @@ tab sball
 set switchbuf=useopen
 
 " Use system clipboard
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 " Customize the wildmenu
 set wildmenu
@@ -181,6 +181,10 @@ let g:snippets_dir = "~/.vim/vim-snippets/snippets"
 " NERDTree
 nmap <F1> <nop>                 " unmap <F1> with help
 map <F1> :NERDTreeToggle<CR>    " browse the list of files in the current directory
+let NERDTreeShowHidden=1
+
+
+
 
 " Unite settings
 nnoremap <F2> :Unite buffer<CR> " browse a list of the currently opened buffers
